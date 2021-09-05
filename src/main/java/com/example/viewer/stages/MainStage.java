@@ -9,15 +9,10 @@ import javafx.beans.property.DoubleProperty;
 import javafx.beans.property.SimpleDoubleProperty;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
-import javafx.scene.Camera;
-import javafx.scene.PerspectiveCamera;
 import javafx.scene.Scene;
 import javafx.scene.canvas.Canvas;
-import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.control.Button;
 import javafx.scene.control.ToolBar;
-import javafx.scene.input.KeyCode;
-import javafx.scene.input.KeyCodeCombination;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.input.ScrollEvent;
 import javafx.scene.layout.BorderPane;
@@ -28,7 +23,6 @@ import javafx.stage.Stage;
 
 import java.io.File;
 import java.io.FileNotFoundException;
-import java.security.InvalidParameterException;
 import java.util.ArrayList;
 
 public class MainStage extends ExtendedStage {
@@ -91,7 +85,7 @@ public class MainStage extends ExtendedStage {
         String file = "src/main/resources/modeles/octahedron.ply";
 
 
-        if(pl.loadPly(file)) modele = pl.getPointsFromPly();
+        if(pl.loadPly(file)) modele = pl.getModeleFromPly();
 
         modele.firstDraw(canvas);
         modele.setTraitDessine(true);
@@ -176,7 +170,7 @@ public class MainStage extends ExtendedStage {
                 PlyReader pl = new PlyReader();
 
                 if(pl.loadPly(file.getAbsolutePath())){
-                    modele = pl.getPointsFromPly();
+                    modele = pl.getModeleFromPly();
 
                     modele.firstDraw(canvas);
                 }

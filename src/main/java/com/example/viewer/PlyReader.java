@@ -64,7 +64,7 @@ public class PlyReader {
         return true;
     }
 
-    public Modele getPointsFromPly(){
+    public Modele getModeleFromPly(){
 
         Point.resetNAuto();
         Modele modele = new Modele(this.nbVertex);
@@ -81,10 +81,12 @@ public class PlyReader {
                 }else{
 
                     ArrayList<Point> tmpPoint = new ArrayList<>();
-                    for(int i = 0 ; i <= Double.parseDouble(tmpTab[0]) ; i ++ ){
+                    for(int i = 1 ; i <= Double.parseDouble(tmpTab[0]) ; i ++ ){
                         tmpPoint.add(modele.getListePoint().get(Integer.parseInt(tmpTab[i])));
                     }
                     Face f = new Face(tmpPoint);
+                    System.out.println(f);
+
                     modele.getListeFace().add(f);
                 }
 
