@@ -1,8 +1,10 @@
-module com.example.demo1 {
+module com.example.viewer {
     requires javafx.controls;
     requires javafx.fxml;
 
 
-    opens com.example.demo1 to javafx.fxml;
-    exports com.example.demo1;
+    opens com.example.viewer to javafx.fxml;
+    exports com.example.viewer;
+    exports com.example.viewer.stages;
+    opens com.example.viewer.stages to javafx.fxml;
 }

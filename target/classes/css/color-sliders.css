@@ -1,0 +1,20 @@
+.color-slider .track {
+	-fx-background-color: linear-gradient(from 0% 0% to 100% 0%, -fx-tone-color, -fx-accent-color);
+
+	-fx-border-color: lightgray;
+	-fx-border-width: 1px;
+	-fx-border-radius: 50%;
+
+	-fx-scale-y: 1.2;
+
+	-fx-border-insets: -1;
+}
+
+.color-slider .thumb {
+	-fx-base: -fx-accent-color;
+}
+
+.color-spinner .increment-arrow-button,
+.color-spinner .decrement-arrow-button {
+    -fx-base: white;
+}
