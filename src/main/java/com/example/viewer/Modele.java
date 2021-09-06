@@ -86,10 +86,32 @@ public class Modele {
 
         int pt1, pt2;
         gc.clearRect(0, 0, canvas.getWidth(), canvas.getHeight());
-
         gc.setFill(Color.LIGHTGRAY);
-        gc.rect(0,0, canvas.getWidth(), canvas.getHeight());;
+        gc.fillRect(0, 0, canvas.getWidth(), canvas.getHeight());
 
+        gc.beginPath();
+        gc.setLineWidth(1);
+        gc.setStroke(BLACK);
+        for (Face face : listeFace) {
+            for(int i = 0; i < face.getListePoint().size(); i++) {
+                pt1 = face.getListePoint().get(i).getId();
+                if(i < face.getListePoint().size() - 1) {
+                    pt2 = face.getListePoint().get(i + 1).getId();
+
+                } else {
+                    pt2 = face.getListePoint().get(0).getId();
+                }
+                //gc.strokeLine(0,5,60,800);
+                //System.out.printf("%s | %s | %s | %s\n", matricePoint.getM()[0][pt1], matricePoint.getM()[1][pt1], matricePoint.getM()[0][pt2], matricePoint.getM()[1][pt2]);
+                gc.strokeLine(matricePoint.getM()[0][pt1], matricePoint.getM()[1][pt1], matricePoint.getM()[0][pt2], matricePoint.getM()[1][pt2]);
+            }
+        }
+        gc.closePath();
+
+        /*GraphicsContext gc = canvas.getGraphicsContext2D();
+
+        int pt1, pt2;
+        gc.clearRect(0, 0, canvas.getWidth(), canvas.getHeight());
         gc.beginPath();
         gc.setLineWidth(1);
         gc.setStroke(BLACK);
@@ -105,7 +127,7 @@ public class Modele {
                 gc.strokeLine(matricePoint.getM()[0][pt1], matricePoint.getM()[1][pt1], matricePoint.getM()[0][pt2], matricePoint.getM()[1][pt2]);
             }
         }
-        gc.closePath();
+        gc.closePath();*/
     }
 
     public void setColor(Color c){
@@ -115,21 +137,17 @@ public class Modele {
     }
 
     public void drawFaces(Canvas canvas) {
-
         double[] coordX;
         double[] coordY;
         double[] coordZ;
         Maths.Vecteur vecteurLumiere = new Maths.Vecteur(0, 0, -1);
         GraphicsContext gc = canvas.getGraphicsContext2D();
         gc.clearRect(0, 0, canvas.getWidth(), canvas.getHeight());
-
-        gc.setFill(Color.LIGHTGRAY);
-        gc.rect(0,0, canvas.getWidth(), canvas.getHeight());;
-
         gc.beginPath();
         Collections.sort(listeFace);
-        for (Face face : listeFace) {
 
+        for (Face face : listeFace) {
+            System.out.println(face);
             coordX = new double[face.getListePoint().size()];
             coordY = new double[face.getListePoint().size()];
             coordZ = new double[face.getListePoint().size()];
