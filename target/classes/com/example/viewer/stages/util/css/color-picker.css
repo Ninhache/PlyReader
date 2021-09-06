@@ -1,0 +1,18 @@
+.color-indicator {
+    -fx-background-color: null;
+    -fx-border-color: white;
+    -fx-border-width: 0.5em;
+    -fx-border-radius: 0.4166667em;
+    /*-fx-translate-x: -0.4166667em;*/
+    /*-fx-translate-y: -0.4166667em;*/
+    /*-fx-translate-y: 50%;*/
+    /*-fx-pref-width: 0.833333em;*/
+    /*-fx-pref-height: 0.833333em;*/
+    -fx-effect: dropshadow(three-pass-box, black, 2, 0.0, 0, 1);
+}
+
+.color-pane-border {
+    -fx-background-color: null;
+    -fx-border-color: black;
+    -fx-border-width: 0.5px;
+}

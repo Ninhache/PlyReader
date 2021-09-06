@@ -44,7 +44,7 @@ public class ColorSquare extends ColorSquareAbstract {
     public ColorSquare(ExtendedColor color) {
         super(color);
 
-
+        System.out.println(Assets.getAssetPath(""));
         getStylesheets().add(Assets.getAssetPath("css/color-components.css"));
         getStylesheets().add(Assets.getAssetPath("css/color-picker.css"));
         getStyleClass().add("color-picker");

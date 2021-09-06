@@ -36,14 +36,15 @@ public class MainStage extends ExtendedStage {
     private final DoubleProperty angleX = new SimpleDoubleProperty(0);
     private final DoubleProperty angleY = new SimpleDoubleProperty(0);
 
-    private final Button BUTTON_OPEN, BUTTON_IMPORT, BUTTON_SWITCH;
+    private final Button BUTTON_OPEN, BUTTON_IMPORT, BUTTON_SWITCH, BUTTON_FACE, BUTTON_TRAIT, BUTTON_LIGHT;
 
     private final FileChooser fileChooser;
 
     // 3D STUFF
     //final SmartGroup group = new SmartGroup();
-    final Canvas canvas = new Canvas(WIDTH, HEIGHT);
-    private Modele modele;
+    final static Canvas canvas = new Canvas(WIDTH, HEIGHT);
+
+    private static Modele modele;
 
     public MainStage() throws FileNotFoundException {
         super();
@@ -57,16 +58,24 @@ public class MainStage extends ExtendedStage {
         //BUTTON_OPEN.setDisable(true);
         BUTTON_IMPORT = new Button("Import");
         BUTTON_SWITCH = new Button("Switch");
+        BUTTON_FACE = new Button("Face");
+        BUTTON_TRAIT = new Button("Trait");
+        BUTTON_LIGHT = new Button("Light");
+        //BUTTON_LIGHT.setDisable(true);
 
 
         //EVENTS
         BUTTON_OPEN.setOnAction(this::onOpenClicked);
         BUTTON_IMPORT.setOnAction(this::onImportClicked);
         BUTTON_SWITCH.setOnAction(this::onSwitchClicked);
+        BUTTON_FACE.setOnAction(this::onFacesClicked);
+        BUTTON_TRAIT.setOnAction(this::onTraitClicked);
+        BUTTON_LIGHT.setOnAction(this::onLightClicked);
+
         canvas.addEventHandler(MouseEvent.ANY, mouseDraggedEvent());
 
         //SET
-        menu.getItems().addAll(BUTTON_OPEN, BUTTON_IMPORT, BUTTON_SWITCH);
+        menu.getItems().addAll(BUTTON_OPEN, BUTTON_IMPORT, BUTTON_SWITCH, BUTTON_FACE, BUTTON_TRAIT, BUTTON_LIGHT);
         root.setTop(menu);
         root.setCenter(canvas);
 
@@ -89,12 +98,7 @@ public class MainStage extends ExtendedStage {
 
         modele.firstDraw(canvas);
         modele.setTraitDessine(true);
-
-        System.out.println(modele.toString());
-
-
-
-
+        System.out.println(">>>>>> TRAIT:" + modele.isTraitDessine() + " - FACE:" + modele.isFaceDessine() + " - LUMIERE:" + modele.isLumiereActive());
 
 
 
@@ -153,9 +157,38 @@ public class MainStage extends ExtendedStage {
         update();
     }
 
+    private void onFacesClicked(ActionEvent e) {
+        if(!modele.isFaceDessine()){
+            modele.setFaceDessine(true);
+        } else {
+            modele.setFaceDessine(false);
+        }
+        update();
+    }
+
+    public void onTraitClicked(ActionEvent e) {
+        System.out.println("LES TRAITS SONT DESSINE :" + modele.isTraitDessine());
+        if(!modele.isTraitDessine()){
+            modele.setTraitDessine(true);
+        } else {
+            modele.setTraitDessine(false);
+        }
+        update();
+    }
+
+    public void onLightClicked(ActionEvent e) {
+        if (!modele.isLumiereActive()) {
+            modele.setLumiereActive(true);
+            modele.setFaceDessine(true);
+        } else {
+            modele.setLumiereActive(false);
+        }
+        update();
+    }
+
+
     private void onSwitchClicked(ActionEvent e) {
         update();
-
     }
 
     private void onImportClicked(ActionEvent e) {
@@ -185,21 +218,11 @@ public class MainStage extends ExtendedStage {
         }
     }
 
-    public void update() {
-        if(modele.isFaceDessine()){
-            modele.setFaceDessine(false);
-            modele.setTraitDessine(true);
-        }else{
-            modele.setFaceDessine(true);
-            modele.setTraitDessine(false);
-        }
-        canvasRedraw();
-    }
-
-    public void canvasRedraw(){
-        if(modele.isFaceDessine()){
+    public static void update() {
+        System.out.println("MODELEINFO TRAIT:" + modele.isTraitDessine() + " - FACE:" + modele.isFaceDessine() + " - LUMIERE:" + modele.isLumiereActive());
+        if(!modele.isFaceDessine()){
             modele.draw(canvas);
-        }else{
+        } else {
             modele.drawFaces(canvas);
         }
     }
@@ -258,7 +281,6 @@ public class MainStage extends ExtendedStage {
                 }
                 dX = mouseDragged.getSceneX();
                 dY = mouseDragged.getSceneY();
-                canvasRedraw();
             }
         };
         return res;

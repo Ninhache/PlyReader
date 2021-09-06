@@ -1,16 +1,14 @@
 package com.example.viewer;
 
+import com.example.viewer.stages.MainStage;
 import com.example.viewer.stages.util.Maths;
 import javafx.animation.Timeline;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.paint.Color;
 
-import java.nio.file.PathMatcher;
 import java.util.ArrayList;
 import java.util.Collections;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
 
 import static javafx.scene.paint.Color.BLACK;
 
@@ -83,19 +81,14 @@ public class Modele {
         draw(canvas);
     }
 
-    public void setFalse(){
-        this.setFaceDessine(false);
-        this.setTraitDessine(false);
-        this.setLumiereActive(false);
-    }
-
     public void draw(Canvas canvas)  {
         GraphicsContext gc = canvas.getGraphicsContext2D();
 
         int pt1, pt2;
         gc.clearRect(0, 0, canvas.getWidth(), canvas.getHeight());
+
         gc.setFill(Color.LIGHTGRAY);
-        gc.fillRect(0, 0, canvas.getWidth(), canvas.getHeight());
+        gc.rect(0,0, canvas.getWidth(), canvas.getHeight());;
 
         gc.beginPath();
         gc.setLineWidth(1);
@@ -106,12 +99,9 @@ public class Modele {
                 pt1 = face.getListePoint().get(i).getId();
                 if(i < face.getListePoint().size() - 1) {
                     pt2 = face.getListePoint().get(i + 1).getId();
-
                 } else {
                     pt2 = face.getListePoint().get(0).getId();
                 }
-                //gc.strokeLine(0,5,60,800);
-                //System.out.printf("%s | %s | %s | %s\n", matricePoint.getM()[0][pt1], matricePoint.getM()[1][pt1], matricePoint.getM()[0][pt2], matricePoint.getM()[1][pt2]);
                 gc.strokeLine(matricePoint.getM()[0][pt1], matricePoint.getM()[1][pt1], matricePoint.getM()[0][pt2], matricePoint.getM()[1][pt2]);
             }
         }
@@ -125,13 +115,17 @@ public class Modele {
     }
 
     public void drawFaces(Canvas canvas) {
-        this.setFalse();
+
         double[] coordX;
         double[] coordY;
         double[] coordZ;
         Maths.Vecteur vecteurLumiere = new Maths.Vecteur(0, 0, -1);
         GraphicsContext gc = canvas.getGraphicsContext2D();
         gc.clearRect(0, 0, canvas.getWidth(), canvas.getHeight());
+
+        gc.setFill(Color.LIGHTGRAY);
+        gc.rect(0,0, canvas.getWidth(), canvas.getHeight());;
+
         gc.beginPath();
         Collections.sort(listeFace);
         for (Face face : listeFace) {
@@ -155,30 +149,13 @@ public class Modele {
                 Maths.Vecteur vecteurFace2 = new Maths.Vecteur(coordX[coordX.length-1]-coordX[0], coordY[coordY.length-1]-coordY[0], coordZ[coordZ.length-1] - coordZ[0]);
                 Maths.Vecteur vecteurNormal = vecteurFace1.produitVectoriel(vecteurFace2);
                 double coeffLumineux = (Math.cos((vecteurLumiere.Normalisation()).produitScalaire(vecteurNormal.Normalisation())));
-                gc.setFill(Color.rgb((int)(face.getColor().getRed()*coeffLumineux), (int)(face.getColor().getBlue()*coeffLumineux), (int)(face.getColor().getGreen()*coeffLumineux)));
+                gc.setFill(Color.rgb((int)(face.getColor().getRed()*255*coeffLumineux), (int)(face.getColor().getBlue()*255*coeffLumineux), (int)(face.getColor().getGreen()*255*coeffLumineux)));
             }else {
                 gc.setFill(face.getColor().getColor());
             }
-            gc.setFill(Color.rgb(0,146,197));
-           // System.out.println("FACE X:" + coordX[0] + " Y:" + coordY + " JSP:" +coordX.length);
-  //          gc.strokeLine(0,5,60,800);
-//            gc.fillPolygon(new double[]{500,5 + 18,5 - 1.5}, new double[]{10,10 + -5,800}, 3);
-            /*System.out.print("X >");
-
-            for(double d : coordX){
-                System.out.print("["+d+"]");
-            }
-            System.out.print("   Y >");
-            for(double d : coordY){
-                System.out.print("["+d+"]");
-            }
-
-            System.out.println("    " + coordX.length);*/
-
             gc.fillPolygon(coordX, coordY, coordX.length);
         }
     }
-
 
     public double getMaxX(){
         double tmp = listePoint.get(0).getX();
@@ -262,6 +239,7 @@ public class Modele {
 
     public void setMatricePoint(Maths.Matrice matricePoint) {
         this.matricePoint = matricePoint;
+        MainStage.update();
     }
 
     public double getRapport() {

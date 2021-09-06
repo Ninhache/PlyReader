@@ -1,0 +1,39 @@
+#red {
+	-fx-accent-color: #ff0000;
+	-fx-tone-color: #000000;
+}
+
+#green {
+	-fx-accent-color: #00ff00;
+	-fx-tone-color: #000000
+}
+
+#blue {
+	-fx-accent-color: #0000ff;
+	-fx-tone-color: #000000
+}
+
+#cyan {
+	-fx-accent-color: #00ffff;
+	-fx-tone-color: #ffffff;
+}
+
+#yellow {
+	-fx-accent-color: #ffff00;
+	-fx-tone-color: #ffffff;
+}
+
+#magenta {
+	-fx-accent-color: #ff00ff;
+	-fx-tone-color: #ffffff;
+}
+
+#black {
+	-fx-accent-color: #000000;
+	-fx-tone-color: #ffffff;
+}
+
+#hue, #saturation, #brightness {
+	-fx-accent-color: #ffffff;
+	-fx-tone-color: #ffffff;
+}
